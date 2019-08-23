@@ -1,0 +1,59 @@
+{
+  "name": "get_callrate_gender_from_bam-readcount",
+  "title": "Predict sample call-rate and gender from BAM-Readcount using 96 Biomarks SNPs",
+  "summary": "This app is used as an internal QC, by predicting sample call rate and gender using only the 96 Biomarks SNPs. It reads in the output from the previous step, BAM-Readcount, which extracts the position specific count information in its format. The call rate is defined as the percentage of the 96 SNP sites which pass the minimum reads cutoff (default: 5). The rule of gender calling is exactly same as in the Biomarks User Guide. This app generates an output file to report the call rate and gender, as well as a log file recording read depth of each single SNP site.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "BAM_Readcount_output",
+      "label": "The output file from BAM-Readcount",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "Output",
+      "label": "The output file reporting the call rate and gender inforamtion",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "Log",
+      "label": "the log file recording the position specific read depth information",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/get_callrate_gender_from_bam-readcount.sh"
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x2"
+        }
+      }
+    }
+  }
+}
